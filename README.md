@@ -4,29 +4,24 @@ Este projeto é um sistema de gerenciamento de funcionários escrito em Java. El
 
 ## Arquivos
 
-O projeto consiste nos seguintes arquivos:
+O projeto agora segue uma organização em camadas. Os principais pacotes são:
 
-- `Main.java`: Arquivo principal de entrada.
-
-- `EmployeesManager.java`: Esta é a classe principal que gerencia a lista de funcionários. Ela fornece métodos para adicionar e remover funcionários, aumentar salários, e exibir informações sobre os funcionários em vários formatos.
-
-- `Employee.java`: Esta classe representa um funcionário individual. Ela armazena informações como nome, data de nascimento, salário e cargo.
-
-- `Person.java`: Esta é uma classe abstrata que representa uma pessoa. A classe `Employee` herda desta classe.
-
-- `BeautifulTable.java`: Esta classe auxiliar é usada para imprimir tabelas formatadas no console.
+- `com.employees.domain` – entidades `Person` e `Employee` e a interface `EmployeeRepository`.
+- `com.employees.application` – contém a classe `EmployeeService` responsável pelas regras de negócio.
+- `com.employees.infrastructure` – implementações de infraestrutura, como `InMemoryEmployeeRepository` e `BeautifulTable` para impressão no console.
+- `com.employees.Main` – ponto de entrada do aplicativo que demonstra o uso das camadas.
 
 ## Uso
 
-Para usar este projeto, você precisa criar uma instância da classe `EmployeesManager` e adicionar funcionários a ela. Aqui está um exemplo de como você pode fazer isso:
+Para usar este projeto, crie alguns `Employee` e utilize o `EmployeeService` com um repositório de sua escolha. Um exemplo usando o repositório em memória:
 
 ```java
 List<Employee> employees = new ArrayList<>();
 employees.add(new Employee("João", LocalDate.of(1990, 1, 1), new BigDecimal("3000.00"), "Gerente"));
 employees.add(new Employee("Maria", LocalDate.of(1995, 6, 15), new BigDecimal("2000.00"), "Desenvolvedor"));
 
-EmployeesManager manager = new EmployeesManager(employees);
-manager.showEmployees();
+EmployeeService service = new EmployeeService(new InMemoryEmployeeRepository(employees));
+service.listEmployees();
 ```
 
 > Versão do Java utilizada
